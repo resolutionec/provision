@@ -350,11 +350,11 @@ const ROOMS=[
   {id:'titanium',n:'II',t:'Titanium Frames',s:'Titanium optical / Titanium sunglasses',f:true},
   {id:'metal',n:'III',t:'Metal Frames',s:'Metal optical / Metal sunglasses',f:true},
   {id:'accessory',n:'IV',t:'Eyewear Accessory',s:'Hinges, components & accessories',f:false}];
-const alt=(m)=>['sun','optical','sun','optical','sun','optical'].map(k=>({type:k,t:`${m} ${k==='sun'?'sunglasses':'optical'}`}));
+const alt=(m)=>['sun','optical','sun','optical','sun','optical','sun','optical','sun'].map(k=>({type:k,t:`${m} ${k==='sun'?'sunglasses':'optical'}`}));
 const WORKS={
   acetate:[{no:'A03039',t:'Deluxe and thick acetate sunglasses',type:'sun',img:'img/a03039-angle.jpg',href:'#object-a03039'},...alt('Acetate').slice(1)],
   titanium:alt('Titanium'),metal:alt('Metal'),
-  accessory:['Hinge component','Temple core','Nose pad','Spare screws','Case','Cleaning cloth'].map(t=>({type:'comp',t}))};
+  accessory:['Hinge component','Spring hinge','Temple core','Temple tip','Nose pad','Screw kit','Brow bar plate','Case','Cleaning cloth'].map(t=>({type:'comp',t}))};
 const OPTS={
   frame:[['black','Black','#0d0d0e'],['havana','Havana',''],['smoke','Smoke crystal','linear-gradient(135deg,#a49d93,#6f6a63)'],['bone','Bone','#e7dfcd']],
   metal:[['palladium','Palladium','linear-gradient(135deg,#eeece7,#a9a69f)'],['gold','Gold','linear-gradient(135deg,#f0d698,#a8843c)'],['gunmetal','Gunmetal','linear-gradient(135deg,#8a8b90,#3b3c40)']],
