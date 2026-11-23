@@ -37,7 +37,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* nav */
 .nav{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:10px 28px;padding:22px 0}
-.brand{font-size:20px;letter-spacing:.02em;text-decoration:none}
+.brand{font-size:20px;letter-spacing:.02em;text-decoration:none;display:inline-flex;align-items:center;gap:12px}
+.brand .mark{height:30px;width:auto;display:block}
 .nav ul{display:flex;flex-wrap:wrap;gap:4px 26px;list-style:none;margin:0;padding:0}
 .nav ul a{display:inline-block;padding:8px 0;text-decoration:none;font-size:13px;letter-spacing:.08em}
 .more-li,.more-menu{display:none!important}
@@ -223,7 +224,7 @@ form{display:flex;flex-direction:column;gap:6px}
 <body>
 <div class="wrap">
 <header class="nav">
-  <a class="brand" href="#home">PRO-VISION OPTICAL</a>
+  <a class="brand" href="#home"><img class="mark" src="img/provision-logo-black.svg" alt="" width="46" height="25">PRO-VISION OPTICAL</a>
   <nav aria-label="Main"><ul>
     <li><a href="#room-acetate" data-nav="collection">COLLECTION</a></li>
     <li><a href="#atelier" data-nav="atelier">ATELIER</a></li>
