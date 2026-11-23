@@ -118,9 +118,19 @@ a.work:hover .pic img{transform:scale(1.04)}
 .callout b{display:block;letter-spacing:.06em}
 .callout:hover,.callout[aria-pressed=true]{color:var(--brass)}
 .c1{grid-column:1;grid-row:1}.c2{grid-column:3;grid-row:1}.c3{grid-column:3;grid-row:2}.c4{grid-column:1;grid-row:2}
-.obj-info{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;gap:36px;padding:24px 0 18px;align-items:start}
-.obj-info h1{font-size:clamp(28px,3.4vw,38px);margin-top:6px}
-.obj-info p{margin:0 0 14px}
+/* product spec sheet */
+.spec{text-align:center;padding:56px 0 40px;border-top:1.5px solid var(--line);margin-top:28px}
+.spec h1{font-size:clamp(28px,3.4vw,38px);margin:8px auto 0;max-width:720px}
+.spec-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:40px 24px;max-width:760px;margin:48px auto 0}
+.spec-grid div{display:flex;flex-direction:column;gap:6px;align-items:center}
+.spec-grid dt{font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.spec-grid dd{margin:0;font:600 clamp(28px,4vw,40px)/1 "League Spartan",sans-serif;letter-spacing:-.01em}
+.spec-grid dd.tbc{color:var(--mute);font-weight:500}
+.spec-note{margin:22px 0 0}
+.spec-list{list-style:none;margin:44px auto 0;padding:0;max-width:900px;border-top:1.5px solid var(--line);border-bottom:1.5px solid var(--line)}
+.spec-list li{font-size:12px;letter-spacing:.09em;text-transform:uppercase;padding:9px 12px}
+.spec-list li+li{border-top:1px dotted var(--hair)}
+.spec-statement{font:500 clamp(21px,2.6vw,28px)/1.22 "League Spartan",sans-serif;max-width:620px;margin:48px auto 36px;text-wrap:balance}
 .views{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;padding:18px 0 10px}
 .views figure{margin:0}
 .views img{display:block;width:100%;background:var(--mount)}
@@ -167,7 +177,6 @@ form{display:flex;flex-direction:column;gap:6px}
   .c1,.c2,.c3,.c4{grid-row:auto;grid-column:auto;align-self:start;margin:0}
   .callout.r{text-align:left}
   .study .callout{align-self:start!important;margin:0!important}
-  .obj-info{grid-template-columns:1fr}
   .rooms{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 24px}
   .home-stage{height:clamp(320px,52vh,500px)}
@@ -177,6 +186,7 @@ form{display:flex;flex-direction:column;gap:6px}
   .nav ul{gap:0 18px}
 }
 @media(max-width:600px){
+  .spec-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 12px}
   .nav{padding:18px 0 10px}
   .nav ul{flex-wrap:nowrap;justify-content:space-between;gap:0 12px}
   .nav ul a,.more{font-size:12px;letter-spacing:.06em;min-height:44px;display:inline-flex;align-items:center}
@@ -265,15 +275,22 @@ form{display:flex;flex-direction:column;gap:6px}
     <button class="callout b c4" data-part="lens" aria-pressed="false"><b>④ LENS</b>CR39 sun lens</button>
   </div>
   <div data-cfg></div>
-  <hr class="rule" style="margin-top:18px">
-  <div class="obj-info">
-    <div><div class="small">Model A03039 · Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span></div><h1>Deluxe and thick acetate sunglasses</h1></div>
-    <div>
-      <p>A deluxe sunglass cut from thick premium acetate and dressed in titanium: an engraved brow bar across the top, riveted end-pieces set with a crystal, and engraved plates running along each temple. Fitted with CR39 sun lenses.</p>
-      <div class="label" style="font-size:13px">Material ··· acetate &amp; titanium<br>Lens ······· CR39 sun lens, grey<br>Type ······· sunglasses<br>Service ···· OEM / ODM, samples on request</div>
-    </div>
+  <section class="spec" aria-label="Model A03039 specifications">
+    <div class="small">Model A03039 · Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span></div>
+    <h1>Deluxe and thick acetate sunglasses</h1>
+    <dl class="spec-grid" id="spec-grid"></dl>
+    <p class="small spec-note" id="spec-note">Measurements to be confirmed against Pro-Vision's spec sheet.</p>
+    <ul class="spec-list">
+      <li>Premium thick acetate front and temples</li>
+      <li>Engraved titanium brow bar and bridge plate</li>
+      <li>Riveted titanium end-pieces with crystal accent</li>
+      <li>Engraved titanium temple plates with metal clasp bands</li>
+      <li>Seven-barrel hinges</li>
+      <li>CR39 sun lenses in grey</li>
+    </ul>
+    <p class="spec-statement">Deluxe thick-acetate sunglasses in <span data-name="frame">Black</span>, dressed in engraved titanium finished in <span data-name="metal">Palladium</span>, complemented by grey CR39 sun lenses.</p>
     <a class="btn solid" href="#visit" id="enquire">Enquire OEM / ODM</a>
-  </div>
+  </section>
   <div class="caps" style="padding-top:20px">Sample photographs</div>
   <div class="views">
     <figure><img src="img/a03039-angle.jpg" alt="A03039 three-quarter view" loading="lazy"><figcaption>Three-quarter</figcaption></figure>
@@ -403,6 +420,11 @@ document.addEventListener('click',e=>{
   if(e.target.closest('[data-reset]'))setCfg(SAMPLE);
 });
 paintCfg();
+
+/* spec sheet: fill these from Pro-Vision's spec sheet (null shows a dash) */
+const SPECS=[['Size',null],['Total width',null,'mm'],['Temple length',null,'mm'],['DBL',null,'mm'],['Eye size A',null,'mm'],['Eye size B',null,'mm']];
+document.getElementById('spec-grid').innerHTML=SPECS.map(([k,v,u])=>`<div><dt>${k}</dt><dd class="${v==null?'tbc':''}">${v==null?'—':v+(u||'')}</dd></div>`).join('');
+document.getElementById('spec-note').hidden=SPECS.every(x=>x[1]!=null);
 
 /* home room cards */
 document.getElementById('room-cards').innerHTML=ROOMS.map(r=>`<a class="room-card" href="#room-${r.id}"><div class="pic">${r.id==='acetate'?'<img src="img/a03039-angle.jpg" alt="">':`<span class="numeral">${r.n}</span>`}</div><span>${r.n} · ${r.t.split(' ')[0]==='Eyewear'?'Accessory':r.t.split(' ')[0]}</span></a>`).join('');
@@ -550,6 +572,7 @@ const M={
     bone:new THREE.MeshPhysicalMaterial({color:0xe6ddca,roughness:.3,clearcoat:.9,clearcoatRoughness:.08})},
   metal:{},engrave:{},
   lens:{grey:0x262930,brown:0x4a3020,g15:0x2c3828,rose:0xb98a84},
+  dark:new THREE.MeshStandardMaterial({color:0x111111,metalness:.6,roughness:.5}),
   crystal:new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,metalness:0,iridescence:1,iridescenceIOR:1.8,clearcoat:1,envMapIntensity:3})};
 const METAL={palladium:0xe4e1da,gold:0xe2bf74,gunmetal:0x77787e};
 for(const [k,c] of Object.entries(METAL)){
@@ -636,11 +659,15 @@ function side(sign){
   const tbar=mk(new THREE.BoxGeometry(5,1.5,1.1),'metal','end',ep);tbar.position.set(1.8,9.5,5.1);
   const cr=mk(new THREE.OctahedronGeometry(1.25,0),'crystal','end',ep);cr.position.set(-.6,9.5,5.9);cr.rotation.set(.4,.7,0);
   const sideBar=mk(new THREE.BoxGeometry(1.4,2.2,7.4),'metal','end',ep);sideBar.position.set(3.7,9.5,1.6);
-  // hinge: frame-side plate on the rim back, three knuckles at the inner corner, temple-side plate, screw + rivet heads
-  mk(new THREE.BoxGeometry(5.6,11,1),'metal','end',ep).position.set(-4.6,9.5,-4.25);
-  for(const dy of [-3.3,0,3.3]){const k=mk(new THREE.CylinderGeometry(1.45,1.45,3,20),'metal','end',ep);k.position.set(-3.9,9.5+dy,-5.6)}
-  const scr=mk(new THREE.CylinderGeometry(.95,.95,.6,6),'metal','end',ep);scr.position.set(-3.9,14.65,-5.6);
-  const tp=mk(new THREE.BoxGeometry(1,11,7.5),'metal','end',ep);tp.position.set(-2.9,9.5,-9.6);
+  // hinge: seven-knuckle barrel on a dark pin, rounded frame leaf on the rim back, temple leaf on the temple, screw heads
+  const HX=-3.9,HZ=-5.6,HL=11.6,HG=.16,KH=(HL-6*HG)/7;
+  mk(new THREE.CylinderGeometry(.95,.95,HL,16),'dark','end',ep).position.set(HX,9.5,HZ);
+  for(let i=0;i<7;i++){const k=mk(new THREE.CylinderGeometry(1.3,1.3,KH,24),'metal','end',ep);k.position.set(HX,9.5-HL/2+KH/2+i*(KH+HG),HZ)}
+  const pinHole=mk(new THREE.CylinderGeometry(.42,.42,.1,16),'dark','end',ep);pinHole.position.set(HX,9.5+HL/2+.02,HZ);
+  const leafF=mk(ext(rrect(-9.6,9.5-HL/2,5.6,HL,[2.6,0,0,2.6]),.5,.2,2),'metal','end',ep);leafF.position.z=-4.45;
+  for(const y of [6.6,12.4]){const h=mk(new THREE.CylinderGeometry(.75,.75,.45,6),'metal','end',ep);h.rotation.x=Math.PI/2;h.position.set(-7.6,y,-4.95)}
+  const leafT=mk(new THREE.BoxGeometry(.6,HL,6.6),'metal','end',ep);leafT.position.set(-2.95,9.5,-9.4);
+  for(const z of [-8.6,-11.2]){const h=mk(new THREE.CylinderGeometry(.7,.7,.4,6),'metal','end',ep);h.rotation.z=Math.PI/2;h.position.set(-3.4,9.5,z)}
   for(const y of [2.2,16.8]){const r=mk(new THREE.CylinderGeometry(.75,.75,.5,16),'metal','end',ep);r.rotation.x=Math.PI/2;r.position.set(-.3,y,-3.95)}
   // temple: thick acetate arm, long engraved arrow plate, metal clasp bands
   const tg=new THREE.Group();tg.position.set(-1.4,9.5,-4.4);tg.rotation.y=Math.PI/2+Math.atan(slope(63.3))-THREE.MathUtils.degToRad(3);ep.add(tg);
@@ -668,7 +695,7 @@ function applyMaterials(){
   const c=window.PV?.cfg||{frame:'black',metal:'palladium',lens:'grey'};const p=window.PV?.part;
   for(const m of parts){
     const r=m.userData.role;
-    const base=r==='frame'?M.frame[c.frame]:r==='metal'?M.metal[c.metal]:r==='engrave'?M.engrave[c.metal]:r==='lens'?M.lens[c.lens]:M.crystal;
+    const base=r==='frame'?M.frame[c.frame]:r==='metal'?M.metal[c.metal]:r==='engrave'?M.engrave[c.metal]:r==='lens'?M.lens[c.lens]:r==='dark'?M.dark:M.crystal;
     m.material=p&&m.userData.part===p?hi(base):base;
   }
 }
