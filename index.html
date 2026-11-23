@@ -59,7 +59,8 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 .label{font-size:14px;line-height:1.65;border-left:1.5px solid var(--line);padding-left:14px}
 .label b{font-weight:700}
-.hero{position:relative}.hero .label{position:absolute;right:2%;bottom:14%;width:250px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) 250px;gap:clamp(48px,7vw,110px);align-items:end}
+.hero .label{margin:0 0 clamp(90px,14vh,150px)}
 
 /* configurator */
 .cfg{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 72px;padding:44px 0 10px}
@@ -165,7 +166,8 @@ form{display:flex;flex-direction:column;gap:6px}
   .rooms{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 24px}
   .home-stage{height:clamp(320px,52vh,500px)}
-  .hero .label{position:static;width:auto;margin:14px 0 0;background:none}
+  .hero{grid-template-columns:1fr;gap:0}
+  .hero .label{margin:14px 0 0}
   .nav ul{gap:0 18px}
 }
 @media(max-width:600px){
@@ -606,7 +608,7 @@ applyMaterials();
 /* ---------- views ---------- */
 const VIEWS={brow:[.05,.75,1],end:[1,.25,.75],temple:[1,.18,-.35],lens:[.12,.04,1]};
 let camGoal=null,resumeT=0,mode='home',baseDist=420;
-const fit=(w,h)=>{const a=w/h;baseDist=(mode==='home'?400:430)*Math.max(1,1.35/a)};
+const fit=(w,h)=>{const a=w/h;baseDist=(mode==='home'?470:430)*Math.max(1,(mode==='home'?1.6:1.35)/a)};
 function setMode(m){
   mode=m;controls.enableZoom=m==='object';
   controls.autoRotate=!reduce;controls.autoRotateSpeed=m==='home'?1.6:.7;
