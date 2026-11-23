@@ -46,7 +46,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 @keyframes in{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 
 /* 3D stage */
-.stage{position:relative;height:clamp(360px,60vh,620px)}
+.stage{position:relative;height:clamp(380px,64vh,660px);margin-top:24px}
 .mount3d{position:absolute;inset:0}
 .mount3d canvas{position:absolute;inset:0;width:100%!important;height:100%!important;cursor:grab;outline:none}
 .mount3d canvas:active{cursor:grabbing}
@@ -62,21 +62,21 @@ button,input,select,textarea{font:inherit;color:inherit}
 .hero{position:relative}.hero .label{position:absolute;right:2%;bottom:14%;width:250px;background:color-mix(in srgb,var(--bg) 70%,transparent)}
 
 /* configurator */
-.cfg{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;padding:18px 0 6px}
-.cfg-row{display:flex;align-items:center;gap:8px}
-.cfg-k{font-size:13px;letter-spacing:.06em;text-transform:uppercase;width:52px}
-.cfg-v{font-size:13px;color:var(--mute);width:104px}
-.sw{display:flex;gap:2px}
-.swatch{width:44px;height:44px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center;border-radius:50%}
-.swatch i{display:block;width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);transition:transform .2s}
-.swatch[aria-pressed=true] i{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--ink);transform:scale(1.05)}
-.swatch:hover i{transform:scale(1.12)}
-.cfg-note{text-align:center;margin:4px 0 0}
-.reset{background:none;border:0;padding:12px 4px;min-height:44px;text-decoration:underline;text-underline-offset:3px;font-size:13px;color:inherit;cursor:pointer}
+.cfg{display:flex;flex-wrap:wrap;justify-content:center;gap:14px 72px;padding:44px 0 10px}
+.cfg-row{display:flex;align-items:center;gap:14px}
+.cfg-k{font-size:13px;letter-spacing:.06em;text-transform:uppercase}
+.cfg-v{font-size:13px;color:var(--mute);width:96px}
+.sw{display:flex;gap:6px}
+.swatch{width:30px;height:30px;border:0;background:none;padding:0;cursor:pointer;display:grid;place-items:center;border-radius:50%}
+.swatch i{display:block;width:14px;height:14px;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(0,0,0,.25);transition:transform .2s}
+.swatch[aria-pressed=true] i{box-shadow:0 0 0 3px var(--bg),0 0 0 4px var(--ink)}
+.swatch:hover i{transform:scale(1.15)}
+.cfg-note{text-align:center;margin:10px 0 0;padding-bottom:28px}
+.reset{background:none;border:0;padding:4px;text-decoration:underline;text-underline-offset:3px;font-size:13px;color:inherit;cursor:pointer}
 .havana{background:radial-gradient(circle at 30% 30%,#b8742c 0 18%,transparent 19%),radial-gradient(circle at 70% 60%,#8a4a18 0 22%,transparent 23%),radial-gradient(circle at 40% 75%,#1a0b04 0 16%,transparent 17%),#3b1d0a}
 
 /* home */
-.intro{text-align:center;padding:34px 0 46px}
+.intro{text-align:center;padding:56px 0 72px}
 .intro p{margin:8px 0 0}
 .rooms{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:30px 0 46px}
 .room-card{text-decoration:none;display:flex;flex-direction:column;gap:10px}
@@ -175,8 +175,8 @@ form{display:flex;flex-direction:column;gap:6px}
   .entry{grid-template-columns:1fr;gap:6px}.entry .ph{display:none}
   .acc .body{grid-template-columns:1fr}.acc .body p,.acc .body .ph{grid-column:1}
   .acc summary{grid-template-columns:40px minmax(0,1fr) 30px}
-  .cfg{justify-content:flex-start}
-  .cfg-k{width:52px}
+  .cfg{justify-content:flex-start;gap:18px;padding-top:32px}
+  .cfg-k{width:56px}
   .tabs{justify-content:flex-start}
 }
 @media(prefers-reduced-motion:reduce){.view{animation:none}*{transition:none!important}}
@@ -204,7 +204,7 @@ form{display:flex;flex-direction:column;gap:6px}
     <p class="hint">Drag to rotate</p>
   </div>
     <aside class="label" aria-label="Wall label">
-      <b>Model A03039</b><br>Deluxe and thick acetate sunglasses<br>Premium acetate &amp; titanium<br>Lens · CR39 sun lens, <span data-name="lens">Grey</span><br>Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span><br>
+      <b>Model A03039</b><br>Deluxe and thick acetate sunglasses<br>Premium acetate &amp; titanium<br>Lens · CR39 sun lens, grey<br>Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span><br>
       <a href="#object-a03039">View work →</a>
     </aside>
   </div>
@@ -248,7 +248,7 @@ form{display:flex;flex-direction:column;gap:6px}
     <div><div class="small">Model A03039 · Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span></div><h1>Deluxe and thick acetate sunglasses</h1></div>
     <div>
       <p>A deluxe sunglass cut from thick premium acetate and dressed in titanium: an engraved brow bar across the top, riveted end-pieces set with a crystal, and engraved plates running along each temple. Fitted with CR39 sun lenses.</p>
-      <div class="label" style="font-size:13px">Material ··· acetate &amp; titanium<br>Lens ······· CR39 sun lens, <span data-name="lens">Grey</span><br>Type ······· sunglasses<br>Service ···· OEM / ODM, samples on request</div>
+      <div class="label" style="font-size:13px">Material ··· acetate &amp; titanium<br>Lens ······· CR39 sun lens, grey<br>Type ······· sunglasses<br>Service ···· OEM / ODM, samples on request</div>
     </div>
     <a class="btn solid" href="#visit" id="enquire">Enquire OEM / ODM</a>
   </div>
@@ -361,16 +361,16 @@ const OPTS={
   lens:[['grey','Grey','#30333a'],['brown','Brown','#5a3d27'],['g15','G-15','#3a4634'],['rose','Rose','#c79a93']]};
 const SAMPLE={frame:'black',metal:'palladium',lens:'grey'};
 let cfg={...SAMPLE};
-try{const s=JSON.parse(localStorage.getItem('pv-cfg')||'null');if(s&&OPTS.frame.some(o=>o[0]===s.frame))cfg={...SAMPLE,...s}}catch(e){}
+try{const s=JSON.parse(localStorage.getItem('pv-cfg')||'null');if(s&&OPTS.frame.some(o=>o[0]===s.frame))cfg={...SAMPLE,...s,lens:'grey'}}catch(e){}
 const nameOf=(k)=>OPTS[k].find(o=>o[0]===cfg[k])[1];
 window.PV={get cfg(){return cfg},view:'home',part:null};
 
 /* configurator */
-const cfgHTML=()=>`<div class="cfg" role="group" aria-label="Configure model A03039">${Object.keys(OPTS).map(k=>`
-  <div class="cfg-row"><span class="cfg-k">${k==='frame'?'Frame':k==='metal'?'Metal':'Lens'}</span>
+const cfgHTML=()=>`<div class="cfg" role="group" aria-label="Configure model A03039">${['frame','metal'].map(k=>`
+  <div class="cfg-row"><span class="cfg-k">${k==='frame'?'Frame':'Metal'}</span>
   <div class="sw">${OPTS[k].map(([v,n,c])=>`<button class="swatch" data-k="${k}" data-v="${v}" title="${n}" aria-label="${k} colour: ${n}" aria-pressed="${cfg[k]===v}"><i class="${v==='havana'?'havana':''}" style="${c?`background:${c}`:''}"></i></button>`).join('')}</div>
   <span class="cfg-v" data-name="${k}">${nameOf(k)}</span></div>`).join('')}</div>
-  <p class="small cfg-note">Photographed sample: Black / Palladium / Grey. Other colourways are concept renders. <button class="reset" data-reset>Reset</button></p>`;
+  <p class="small cfg-note">Photographed sample: Black / Palladium. Other colourways are concept renders. <button class="reset" data-reset>Reset</button></p>`;
 const paintCfg=()=>{
   document.querySelectorAll('[data-cfg]').forEach(el=>el.innerHTML=cfgHTML());
   document.querySelectorAll('[data-name]').forEach(el=>el.textContent=nameOf(el.dataset.name));
@@ -418,7 +418,7 @@ document.querySelectorAll('.callout').forEach(c=>{
 });
 
 /* enquiry */
-document.getElementById('enquire').addEventListener('click',()=>{PV.re=`Model A03039 · ${nameOf('frame')} / ${nameOf('metal')} / ${nameOf('lens')} lens`});
+document.getElementById('enquire').addEventListener('click',()=>{PV.re=`Model A03039 · ${nameOf('frame')} / ${nameOf('metal')}`});
 const form=document.getElementById('enq');let text='';
 form.addEventListener('submit',e=>{
   e.preventDefault();const d=Object.fromEntries(new FormData(form));const err=document.getElementById('f-err');
