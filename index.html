@@ -160,6 +160,7 @@ a.work:hover .pic img{transform:scale(1.04)}
 .acc .body{display:grid;grid-template-columns:60px minmax(0,1fr) 220px;gap:16px;padding:0 0 22px}
 .acc .body p{grid-column:2;margin:0;max-width:62ch}
 .acc .body .ph{grid-column:3;height:130px}
+.faq .body p{grid-column:2/4;max-width:68ch}
 .entry{display:grid;grid-template-columns:140px minmax(0,1fr) 160px;gap:30px;border-top:1.5px solid var(--line);padding:22px 0;align-items:start}
 .entry:last-child{border-bottom:1.5px solid var(--line)}
 .entry p{margin:8px 0 0;max-width:60ch}
@@ -195,6 +196,7 @@ form{display:flex;flex-direction:column;gap:6px}
   .nav ul{gap:0 18px}
 }
 @media(max-width:600px){
+  .acc h3{font-size:18px}
   .spec-grid{gap:32px 12px}
   .nav{padding:18px 0 10px}
   .nav ul{flex-wrap:nowrap;justify-content:space-between;gap:0 12px}
@@ -202,7 +204,7 @@ form{display:flex;flex-direction:column;gap:6px}
   .extra{display:none}
   .more-li{display:block!important}
   .more-menu{display:flex!important;flex-direction:column;max-height:0;overflow:hidden;opacity:0;margin-top:4px;border-top:1px solid transparent;transition:max-height .38s ease-in-out,opacity .3s ease-in-out,border-color .3s ease-in-out}
-  .more-menu.open{max-height:140px;opacity:1;border-top-color:var(--hair)}
+  .more-menu.open{max-height:200px;opacity:1;border-top-color:var(--hair)}
   .more-menu li{border-bottom:1px solid var(--hair)}
   .more-menu a{display:flex;min-height:48px;align-items:center;width:100%}
   .two{grid-template-columns:1fr;gap:30px}
@@ -227,11 +229,13 @@ form{display:flex;flex-direction:column;gap:6px}
     <li><a href="#atelier" data-nav="atelier">ATELIER</a></li>
     <li><a href="#process" data-nav="process">PROCESS</a></li>
     <li class="extra"><a href="#journal" data-nav="journal">JOURNAL</a></li>
+    <li class="extra"><a href="#faq" data-nav="faq">FAQ</a></li>
     <li class="extra"><a href="#visit" data-nav="visit">VISIT</a></li>
     <li class="more-li"><button class="more" type="button" aria-expanded="false" aria-controls="more-menu">MORE +</button></li>
   </ul>
   <ul class="more-menu" id="more-menu" inert>
     <li><a href="#journal" data-nav="journal">JOURNAL</a></li>
+    <li><a href="#faq" data-nav="faq">FAQ</a></li>
     <li><a href="#visit" data-nav="visit">VISIT</a></li>
   </ul></nav>
 </header>
@@ -359,6 +363,24 @@ form{display:flex;flex-direction:column;gap:6px}
   </div>
 </section>
 
+<!-- FAQ -->
+<section class="view" data-view="faq">
+  <div style="padding-top:30px"><h1>Frequently asked questions</h1></div>
+  <p class="small" style="margin:10px 0 28px">Draft answers for Pro-Vision to confirm.</p>
+  <div class="acc faq">
+    <details open><summary><span>01</span><h3>What is the difference between OEM and ODM?</h3></summary><div class="body"><p>With OEM, we manufacture your own design to your specifications. With ODM, you start from one of our existing designs, such as Model A03039, and we adapt it with your branding, colourways and finishes.</p></div></details>
+    <details><summary><span>02</span><h3>Which materials do you work with?</h3></summary><div class="body"><p>Acetate (including premium Mazzucchelli acetate), titanium and metal, across optical frames and sunglasses, plus hinges, components and accessories.</p></div></details>
+    <details><summary><span>03</span><h3>Can I customise an existing model?</h3></summary><div class="body"><p>Yes. Frame colour, metal finish, lenses and branding can all be discussed as an ODM project. Tell us the model number and what you'd like to change in your enquiry.</p></div></details>
+    <details><summary><span>04</span><h3>Can I order samples before production?</h3></summary><div class="body"><p>Yes, samples are available on request. Choose “Sample request” in the enquiry form and include the model numbers you're interested in.</p></div></details>
+    <details><summary><span>05</span><h3>What is the minimum order quantity?</h3></summary><div class="body"><p>It depends on the model, material and level of customisation, so we quote it per project. Send your brief and we'll confirm the MOQ with your quotation.</p></div></details>
+    <details><summary><span>06</span><h3>How long does production take?</h3></summary><div class="body"><p>Lead times vary with the material, the quantity and how much tooling a design needs. We confirm the timeline with your quotation.</p></div></details>
+    <details><summary><span>07</span><h3>What certifications does the factory hold?</h3></summary><div class="body"><p>ISO9001–ISO45001, FDA, ISCC and CE. Copies of the certificates are available to brand partners on request.</p></div></details>
+    <details><summary><span>08</span><h3>Can I visit the factory?</h3></summary><div class="body"><p>Yes. The factory is in Longgang District, Shenzhen. Contact sales@provision-opt.com to arrange a visit.</p></div></details>
+    <details><summary><span>09</span><h3>How do I start an enquiry?</h3></summary><div class="body"><p>Use the enquiry form on the Visit page, or email sales@provision-opt.com with your brand, the models or design you have in mind, and your quantities.</p></div></details>
+  </div>
+  <div class="center" style="padding:56px 0 110px"><p style="margin:0 0 18px">Still have a question?</p><a class="btn solid" href="#visit">Send an enquiry</a></div>
+</section>
+
 <!-- VISIT -->
 <section class="view" data-view="visit">
   <div class="two">
@@ -441,7 +463,7 @@ document.getElementById('spec-grid').innerHTML=SPECS.map(([k,v,u])=>`<div><dt>${
 document.getElementById('spec-note').hidden=SPECS.every(x=>x[1]!=null);
 
 /* home room cards */
-document.getElementById('room-cards').innerHTML=ROOMS.map(r=>`<a class="room-card" href="#room-${r.id}"><div class="pic">${r.id==='acetate'?'<img src="img/a03039-angle.jpg" alt="">':`<span class="numeral">${r.n}</span>`}</div><span>${r.n} · ${r.t.split(' ')[0]==='Eyewear'?'Accessory':r.t.split(' ')[0]}</span></a>`).join('');
+document.getElementById('room-cards').innerHTML=ROOMS.map(r=>`<a class="room-card" href="#room-${r.id}"><div class="pic"><img src="img/a03039-angle.jpg" alt=""></div><span>${r.n} · ${r.t.split(' ')[0]==='Eyewear'?'Accessory':r.t.split(' ')[0]}</span></a>`).join('');
 
 /* rooms */
 let filter='all';
@@ -455,7 +477,7 @@ const renderRoom=(id)=>{
   const list=WORKS[r.id].filter(w=>!r.f||filter==='all'||w.type===filter);
   document.getElementById('room-grid').innerHTML=list.map(w=>w.no?
     `<a class="work" href="${w.href}"><div class="pic"><img src="${w.img}" alt="Model ${w.no}"></div><div class="label"><b>Model ${w.no}</b><br>${w.t}</div></a>`:
-    `<div class="work"><div class="pic empty">Awaiting installation</div><div class="label"><b>No. —</b><br>${w.t}</div></div>`).join('');
+    `<div class="work"><div class="pic"><img src="img/a03039-angle.jpg" alt="" loading="lazy"></div><div class="label"><b>No. —</b><br>${w.t}</div></div>`).join('');
   return r;
 };
 document.getElementById('room-filter').addEventListener('click',e=>{const b=e.target.closest('[data-f]');if(!b)return;filter=b.dataset.f;renderRoom(PV.room)});
@@ -509,7 +531,7 @@ const route=()=>{
   const nav=h.startsWith('room-')||h.startsWith('object')?'collection':h;
   document.querySelectorAll('[data-nav]').forEach(a=>a.dataset.nav===nav?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current'));
   if(h==='visit'&&PV.re){document.getElementById('f-re').value=PV.re;PV.re=null}
-  setMore(false);moreBtn.classList.toggle('cur',nav==='journal'||nav==='visit');
+  setMore(false);moreBtn.classList.toggle('cur',['journal','faq','visit'].includes(nav));
   PV.view=h;PV.locked=null;PV.part=null;
   document.querySelectorAll('.callout').forEach(x=>x.setAttribute('aria-pressed','false'));
   scrollTo(0,0);
