@@ -15,12 +15,12 @@
    COLOUR warm gallery cream wall, graphite ink, one brass accent for "selected"
    TYPE   League Spartan for titles, Courier Prime for every label and line of text
    LAYOUT nav · object · label · rooms; generous gutters, hairline rules, footer on every room */
-:root{color-scheme:light dark;
+:root{color-scheme:light;
   --bg:light-dark(#f4f0e8,#151412);--wall:light-dark(#fbf9f4,#1c1b18);
   --ink:light-dark(#1c1b19,#ece6da);--mute:light-dark(#6b665d,#a49e92);
   --line:light-dark(#2a2925,#d6cfc1);--hair:light-dark(#d9d3c6,#38362f);
   --brass:light-dark(#9a7646,#c9a46c);--mount:#f3f3f3}
-:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+:root,:root[data-theme]{color-scheme:light} /* always light mode */
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:24px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Courier Prime",ui-monospace,Menlo,monospace;overflow-x:clip}
@@ -111,7 +111,8 @@ a.work:hover .pic img{transform:scale(1.04)}
 /* object */
 .crumb{font-size:13px;padding:6px 0 0;letter-spacing:.04em}
 .study{display:grid;grid-template-columns:200px minmax(0,1fr) 200px;grid-template-rows:1fr 1fr;gap:0 18px;height:clamp(420px,64vh,600px)}
-.study .stage{grid-column:2;grid-row:1/3;height:auto}
+.study .stage{grid-column:1/4;grid-row:1/3;height:auto}
+.study .callout{position:relative;z-index:2}
 .callout{background:none;border:0;padding:10px 0;text-align:left;font-size:14px;line-height:1.55;cursor:pointer;align-self:start;transition:color .2s}
 .callout.r{text-align:right}.callout.b{align-self:end;margin-bottom:56px}
 .callout b{display:block;letter-spacing:.06em}
@@ -180,7 +181,8 @@ form{display:flex;flex-direction:column;gap:6px}
   .nav ul a,.more{font-size:12px;letter-spacing:.06em;min-height:44px;display:inline-flex;align-items:center}
   .extra{display:none}
   .more-li{display:block!important}
-  .more-menu:not([hidden]){display:flex!important;flex-direction:column;border-top:1px solid var(--hair);margin-top:4px}
+  .more-menu{display:flex!important;flex-direction:column;max-height:0;overflow:hidden;opacity:0;margin-top:4px;border-top:1px solid transparent;transition:max-height .38s ease-in-out,opacity .3s ease-in-out,border-color .3s ease-in-out}
+  .more-menu.open{max-height:140px;opacity:1;border-top-color:var(--hair)}
   .more-menu li{border-bottom:1px solid var(--hair)}
   .more-menu a{display:flex;min-height:48px;align-items:center;width:100%}
   .two{grid-template-columns:1fr;gap:30px}
@@ -208,7 +210,7 @@ form{display:flex;flex-direction:column;gap:6px}
     <li class="extra"><a href="#visit" data-nav="visit">VISIT</a></li>
     <li class="more-li"><button class="more" type="button" aria-expanded="false" aria-controls="more-menu">MORE +</button></li>
   </ul>
-  <ul class="more-menu" id="more-menu" hidden>
+  <ul class="more-menu" id="more-menu" inert>
     <li><a href="#journal" data-nav="journal">JOURNAL</a></li>
     <li><a href="#visit" data-nav="visit">VISIT</a></li>
   </ul></nav>
@@ -377,7 +379,7 @@ const WORKS={
 const OPTS={
   frame:[['black','Black','#0d0d0e'],['havana','Havana',''],['smoke','Smoke crystal','linear-gradient(135deg,#a49d93,#6f6a63)'],['bone','Bone','#e7dfcd']],
   metal:[['palladium','Palladium','linear-gradient(135deg,#eeece7,#a9a69f)'],['gold','Gold','linear-gradient(135deg,#f0d698,#a8843c)'],['gunmetal','Gunmetal','linear-gradient(135deg,#8a8b90,#3b3c40)']],
-  lens:[[40.56,23.91],[41.91,23.79],[43.26,23.63],[44.6,23.46],[45.95,23.29],[47.29,23.09],[48.63,22.86],[49.95,22.56],[51.26,22.21],[52.55,21.79],[53.8,21.28],[54.96,20.6],[56.0,19.76],[56.89,18.76],[57.62,17.64],[58.15,16.41],[58.51,15.11],[58.76,13.78],[58.99,12.45],[59.22,11.11],[59.45,9.77],[59.68,8.43],[59.91,7.09],[60.13,5.75],[60.28,4.41],[60.33,3.06],[60.28,1.7],[60.17,0.35],[60.02,-1.0],[59.83,-2.34],[59.62,-3.69],[59.38,-5.02],[59.12,-6.35],[58.81,-7.67],[58.44,-8.98],[58.02,-10.27],[57.55,-11.55],[57.02,-12.79],[56.4,-14.0],[55.69,-15.15],[54.87,-16.22],[53.96,-17.22],[52.98,-18.15],[51.93,-19.0],[50.81,-19.77],[49.64,-20.44],[48.42,-21.03],[47.17,-21.55],[45.89,-22.01],[44.59,-22.41],[43.28,-22.76],[41.96,-23.06],[40.63,-23.31],[39.29,-23.52],[37.94,-23.67],[36.59,-23.76],[35.23,-23.8],[33.87,-23.81],[32.51,-23.8],[31.16,-23.75],[29.81,-23.62],[28.47,-23.43],[27.13,-23.18],[25.81,-22.87],[24.52,-22.46],[23.27,-21.95],[22.07,-21.32],[20.93,-20.6],[19.84,-19.8],[18.81,-18.92],[17.85,-17.97],[16.96,-16.94],[16.14,-15.86],[15.37,-14.75],[14.64,-13.6],[13.97,-12.42],[13.38,-11.21],[12.85,-9.96],[12.36,-8.69],[11.9,-7.41],[11.46,-6.13],[11.02,-4.84],[10.61,-3.55],[10.23,-2.25],[9.89,-0.93],[9.6,0.39],[9.35,1.73],[9.13,3.07],[8.99,4.41],[8.92,5.77],[8.9,7.12],[8.93,8.48],[9.03,9.83],[9.24,11.16],[9.59,12.46],[10.08,13.72],[10.7,14.92],[11.44,16.05],[12.29,17.1],[13.25,18.05],[14.3,18.9],[15.43,19.64],[16.62,20.28],[17.85,20.84],[19.12,21.33],[20.4,21.76],[21.71,22.14],[23.02,22.47],[24.35,22.75],[25.68,23.01],[27.02,23.24],[28.37,23.44],[29.71,23.61],[31.06,23.75],[32.42,23.86],[33.77,23.94],[35.13,23.97],[36.49,23.98],[37.84,23.98],[39.2,23.97]]};
+  lens:[[40.72,25.2],[42.14,25.07],[43.55,24.91],[44.97,24.73],[46.38,24.54],[47.79,24.33],[49.19,24.07],[50.58,23.74],[51.95,23.36],[53.3,22.9],[54.59,22.33],[55.8,21.6],[56.89,20.71],[57.84,19.67],[58.63,18.5],[59.23,17.23],[59.65,15.89],[59.95,14.5],[60.2,13.09],[60.44,11.69],[60.68,10.28],[60.92,8.88],[61.17,7.47],[61.39,6.06],[61.56,4.65],[61.63,3.23],[61.59,1.81],[61.48,0.39],[61.33,-1.03],[61.13,-2.44],[60.91,-3.85],[60.66,-5.25],[60.38,-6.65],[60.05,-8.04],[59.67,-9.41],[59.23,-10.76],[58.73,-12.1],[58.16,-13.4],[57.51,-14.67],[56.76,-15.87],[55.91,-17.0],[54.95,-18.06],[53.93,-19.04],[52.83,-19.95],[51.67,-20.76],[50.45,-21.48],[49.17,-22.12],[47.86,-22.67],[46.53,-23.16],[45.17,-23.59],[43.79,-23.97],[42.4,-24.29],[41.01,-24.57],[39.6,-24.79],[38.18,-24.95],[36.76,-25.05],[35.34,-25.1],[33.91,-25.11],[32.49,-25.1],[31.06,-25.04],[29.65,-24.91],[28.24,-24.71],[26.84,-24.44],[25.45,-24.11],[24.1,-23.69],[22.78,-23.15],[21.52,-22.5],[20.31,-21.76],[19.16,-20.92],[18.07,-20.01],[17.05,-19.02],[16.11,-17.95],[15.24,-16.83],[14.42,-15.66],[13.64,-14.46],[12.93,-13.23],[12.29,-11.96],[11.73,-10.65],[11.21,-9.32],[10.73,-7.98],[10.26,-6.64],[9.8,-5.29],[9.37,-3.93],[8.96,-2.56],[8.61,-1.18],[8.31,0.21],[8.05,1.61],[7.83,3.02],[7.68,4.44],[7.61,5.86],[7.6,7.28],[7.64,8.71],[7.75,10.12],[7.99,11.52],[8.36,12.89],[8.88,14.21],[9.52,15.48],[10.28,16.67],[11.16,17.78],[12.15,18.8],[13.23,19.72],[14.39,20.54],[15.62,21.24],[16.91,21.85],[18.23,22.38],[19.58,22.85],[20.94,23.27],[22.32,23.63],[23.71,23.95],[25.1,24.22],[26.51,24.47],[27.92,24.69],[29.33,24.88],[30.75,25.03],[32.17,25.15],[33.59,25.23],[35.02,25.27],[36.44,25.28],[37.87,25.28],[39.29,25.26]]};
 const SAMPLE={frame:'black',metal:'palladium',lens:'grey'};
 let cfg={...SAMPLE};
 try{const s=JSON.parse(localStorage.getItem('pv-cfg')||'null');if(s&&OPTS.frame.some(o=>o[0]===s.frame))cfg={...SAMPLE,...s,lens:'grey'}}catch(e){}
@@ -455,10 +457,11 @@ document.getElementById('copy').addEventListener('click',async()=>{
 
 /* mobile "More" menu */
 const moreBtn=document.querySelector('.more'),moreMenu=document.getElementById('more-menu');
-const setMore=(o)=>{moreMenu.hidden=!o;moreBtn.setAttribute('aria-expanded',o);moreBtn.textContent=o?'MORE –':'MORE +'};
-moreBtn.addEventListener('click',()=>setMore(moreMenu.hidden));
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!moreMenu.hidden){setMore(false);moreBtn.focus()}});
-document.addEventListener('click',e=>{if(!moreMenu.hidden&&!e.target.closest('.nav nav'))setMore(false)});
+const isOpen=()=>moreMenu.classList.contains('open');
+const setMore=(o)=>{moreMenu.classList.toggle('open',o);moreMenu.inert=!o;moreBtn.setAttribute('aria-expanded',o);moreBtn.textContent=o?'MORE –':'MORE +'};
+moreBtn.addEventListener('click',()=>setMore(!isOpen()));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&isOpen()){setMore(false);moreBtn.focus()}});
+document.addEventListener('click',e=>{if(isOpen()&&!e.target.closest('.nav nav'))setMore(false)});
 
 /* router */
 const route=()=>{
@@ -505,7 +508,7 @@ scene.add(new THREE.HemisphereLight(0xffffff,0x8a8070,.35));
 const camera=new THREE.PerspectiveCamera(26,1,1,5000);
 const controls=new OrbitControls(camera,renderer.domElement);
 controls.enableDamping=true;controls.dampingFactor=.07;controls.enablePan=false;
-controls.rotateSpeed=.8;controls.minDistance=170;controls.maxDistance=720;
+controls.rotateSpeed=.8;controls.minDistance=120;controls.maxDistance=720;
 
 /* ---------- textures ---------- */
 let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
@@ -591,7 +594,11 @@ const TRACE={outer:[[-33.43,26.84],[-32.42,26.78],[-31.41,26.7],[-30.4,26.61],[-
   hole:[[40.37,23.65],[41.17,23.58],[41.97,23.49],[42.77,23.39],[43.57,23.29],[44.37,23.19],[45.17,23.09],[45.97,22.99],[46.77,22.88],[47.56,22.76],[48.36,22.63],[49.15,22.47],[49.93,22.28],[50.71,22.07],[51.48,21.85],[52.25,21.61],[53.01,21.35],[53.74,21.03],[54.45,20.64],[55.11,20.19],[55.72,19.68],[56.29,19.11],[56.8,18.5],[57.25,17.83],[57.63,17.13],[57.92,16.39],[58.12,15.61],[58.28,14.82],[58.42,14.03],[58.55,13.24],[58.69,12.44],[58.83,11.65],[58.96,10.86],[59.1,10.06],[59.23,9.27],[59.37,8.47],[59.51,7.68],[59.64,6.89],[59.78,6.09],[59.91,5.3],[60.01,4.5],[60.06,3.7],[60.05,2.9],[60.01,2.09],[59.96,1.29],[59.89,0.49],[59.81,-0.31],[59.71,-1.11],[59.6,-1.91],[59.48,-2.71],[59.35,-3.5],[59.21,-4.3],[59.07,-5.09],[58.92,-5.88],[58.76,-6.67],[58.57,-7.45],[58.36,-8.23],[58.13,-9.0],[57.89,-9.77],[57.63,-10.53],[57.35,-11.29],[57.05,-12.03],[56.72,-12.77],[56.37,-13.49],[55.98,-14.19],[55.56,-14.88],[55.09,-15.53],[54.58,-16.15],[54.03,-16.74],[53.47,-17.31],[52.89,-17.87],[52.29,-18.4],[51.65,-18.89],[50.98,-19.34],[50.3,-19.77],[49.6,-20.16],[48.88,-20.53],[48.15,-20.86],[47.4,-21.16],[46.65,-21.44],[45.89,-21.71],[45.13,-21.96],[44.35,-22.19],[43.58,-22.39],[42.79,-22.59],[42.01,-22.76],[41.22,-22.91],[40.42,-23.06],[39.63,-23.19],[38.83,-23.31],[38.03,-23.39],[37.23,-23.44],[36.43,-23.48],[35.62,-23.51],[34.82,-23.51],[34.01,-23.51],[33.2,-23.51],[32.4,-23.51],[31.59,-23.49],[30.79,-23.45],[29.99,-23.36],[29.19,-23.26],[28.4,-23.13],[27.61,-22.99],[26.82,-22.83],[26.03,-22.64],[25.26,-22.44],[24.49,-22.18],[23.75,-21.88],[23.02,-21.53],[22.31,-21.15],[21.62,-20.74],[20.95,-20.3],[20.31,-19.82],[19.68,-19.32],[19.07,-18.79],[18.48,-18.24],[17.93,-17.66],[17.41,-17.05],[16.91,-16.42],[16.42,-15.77],[15.96,-15.12],[15.51,-14.45],[15.07,-13.77],[14.65,-13.08],[14.25,-12.38],[13.89,-11.67],[13.56,-10.94],[13.25,-10.19],[12.96,-9.44],[12.67,-8.69],[12.4,-7.93],[12.13,-7.17],[11.86,-6.41],[11.61,-5.65],[11.35,-4.88],[11.1,-4.12],[10.85,-3.35],[10.61,-2.58],[10.4,-1.81],[10.2,-1.03],[10.03,-0.24],[9.86,0.55],[9.71,1.34],[9.57,2.13],[9.44,2.93],[9.33,3.72],[9.25,4.52],[9.21,5.33],[9.2,6.13],[9.2,6.94],[9.2,7.74],[9.21,8.55],[9.24,9.35],[9.32,10.15],[9.45,10.94],[9.63,11.72],[9.87,12.49],[10.16,13.24],[10.48,13.98],[10.85,14.69],[11.28,15.37],[11.74,16.03],[12.25,16.66],[12.79,17.25],[13.37,17.8],[13.98,18.32],[14.62,18.81],[15.28,19.26],[15.98,19.67],[16.7,20.03],[17.43,20.36],[18.17,20.66],[18.93,20.95],[19.69,21.22],[20.45,21.47],[21.22,21.71],[22.0,21.92],[22.78,22.12],[23.56,22.29],[24.35,22.45],[25.14,22.61],[25.93,22.76],[26.73,22.9],[27.52,23.02],[28.32,23.14],[29.12,23.25],[29.92,23.35],[30.72,23.43],[31.52,23.5],[32.32,23.56],[33.13,23.62],[33.93,23.66],[34.74,23.68],[35.54,23.68],[36.35,23.68],[37.15,23.68],[37.96,23.68],[38.76,23.68],[39.57,23.68]],
   lens:[[48.31,22.96],[53.43,21.56],[55.04,20.68],[56.25,19.67],[57.26,18.47],[57.88,17.42],[58.36,16.17],[60.38,4.38],[60.39,3.33],[60.04,-0.99],[58.85,-7.64],[57.63,-11.49],[56.47,-14.01],[54.91,-16.3],[52.63,-18.57],[51.35,-19.49],[48.99,-20.85],[45.45,-22.2],[42.67,-22.95],[38.79,-23.64],[36.16,-23.81],[31.11,-23.8],[25.8,-22.91],[23.97,-22.35],[21.21,-20.88],[17.89,-18.12],[14.83,-13.98],[13.6,-11.86],[12.54,-9.23],[10.28,-2.61],[9.44,1.1],[8.9,4.51],[8.9,9.35],[9.48,12.35],[10.05,13.85],[11.0,15.56],[12.87,17.82],[14.68,19.27],[15.84,19.97],[19.23,21.39],[22.6,22.4],[26.1,23.11],[29.64,23.64],[33.68,23.98],[40.37,23.98]]};
 const v2=(a,sx=1)=>a.map(([x,y])=>new THREE.Vector2(x*sx,y));
-function frontShape(){const s=new THREE.Shape(v2(TRACE.outer));s.holes.push(new THREE.Path(v2(TRACE.hole)),new THREE.Path(v2(TRACE.hole,-1)));return s}
+function frontShape(){ // holes must wind opposite to the outline, or their inner walls render inside-out
+  const o=v2(TRACE.outer),cw=THREE.ShapeUtils.isClockWise(o),s=new THREE.Shape(o);
+  for(const sx of [1,-1]){const h=v2(TRACE.hole,sx);if(THREE.ShapeUtils.isClockWise(h)===cw)h.reverse();s.holes.push(new THREE.Path(h))}
+  return s;
+}
 let front=ext(frontShape(),5,B,6,36);front.deleteAttribute('normal');front=mergeVertices(front,1e-3);front.computeVertexNormals();front.translate(0,0,-2.5);bendGeo(front);
 mk(front,'frame','front',frame);
 
@@ -661,7 +668,7 @@ applyMaterials();
 /* ---------- views ---------- */
 const VIEWS={brow:[.05,.75,1],end:[1,.25,.75],temple:[1,.18,-.35],lens:[.12,.04,1]};
 let camGoal=null,resumeT=0,mode='home',baseDist=420;
-const fit=(w,h)=>{const a=w/h;baseDist=(mode==='home'?470:430)*Math.max(1,(mode==='home'?1.6:1.35)/a)};
+const fit=(w,h)=>{const a=w/h;baseDist=Math.max(mode==='home'?362:305,493/a)}; // 1.5x larger than before, capped to fit the stage at every angle
 function setMode(m){
   mode=m;controls.enableZoom=m==='object';
   controls.autoRotate=!reduce;controls.autoRotateSpeed=m==='home'?1.6:.7;

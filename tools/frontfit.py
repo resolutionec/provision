@@ -20,7 +20,7 @@ if full.geom_type!='Polygon': full=max(full.geoms,key=lambda g:g.area)
 B=1.2
 outerG=full.buffer(-B,join_style=1)
 holeG=Lv.buffer(B,join_style=1)
-lensC=Lv.buffer(1.5,join_style=1).intersection(outerG.buffer(-.4))
+lensC=Lv.buffer(2.8,join_style=1).intersection(outerG.buffer(-.4))
 def arr(g,N):
   L=g.exterior.length;pts=np.array([g.exterior.interpolate(L*i/N).coords[0] for i in range(N)])
   for _ in range(2): pts=(np.roll(pts,1,0)+2*pts+np.roll(pts,-1,0))/4
