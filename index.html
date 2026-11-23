@@ -16,11 +16,11 @@
    TYPE   League Spartan for titles, Courier Prime for every label and line of text
    LAYOUT nav · object · label · rooms; generous gutters, hairline rules, footer on every room */
 :root{color-scheme:light;
-  --bg:light-dark(#f4f0e8,#151412);--wall:light-dark(#fbf9f4,#1c1b18);
-  --ink:light-dark(#1c1b19,#ece6da);--mute:light-dark(#6b665d,#a49e92);
-  --line:light-dark(#2a2925,#d6cfc1);--hair:light-dark(#d9d3c6,#38362f);
-  --brass:light-dark(#9a7646,#c9a46c);--mount:#f3f3f3}
-:root,:root[data-theme]{color-scheme:light} /* always light mode */
+  --bg:#f4f0e8;--wall:#fbf9f4;
+  --ink:#1c1b19;--mute:#6b665d;
+  --line:#2a2925;--hair:#d9d3c6;
+  --brass:#9a7646;--mount:#f3f3f3}
+:root,:root[data-theme],html{color-scheme:light!important} /* always light mode */
 *{box-sizing:border-box;min-width:0}
 html{scroll-padding-top:24px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 "Courier Prime",ui-monospace,Menlo,monospace;overflow-x:clip}
@@ -166,6 +166,7 @@ form{display:flex;flex-direction:column;gap:6px}
   .study .stage{grid-column:1/3;grid-row:1;height:clamp(340px,56vh,480px)}
   .c1,.c2,.c3,.c4{grid-row:auto;grid-column:auto;align-self:start;margin:0}
   .callout.r{text-align:left}
+  .study .callout{align-self:start!important;margin:0!important}
   .obj-info{grid-template-columns:1fr}
   .rooms{grid-template-columns:repeat(2,minmax(0,1fr))}
   .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:40px 24px}
@@ -222,7 +223,7 @@ form{display:flex;flex-direction:column;gap:6px}
   <div class="hero"><div class="stage home-stage">
     <div class="mount3d" data-mode="home"><img class="fallback" src="img/a03039-front.jpg" alt="Model A03039 sunglasses, front view"><span class="loading">Hanging the work…</span></div>
     <div class="shadow"></div>
-    <p class="hint">Drag to rotate</p>
+    <p class="hint">Drag to rotate · scroll to zoom</p>
   </div>
     <aside class="label" aria-label="Wall label">
       <b>Model A03039</b><br>Deluxe and thick acetate sunglasses<br>Premium acetate &amp; titanium<br>Lens · CR39 sun lens, grey<br>Colour · <span data-name="frame">Black</span> / <span data-name="metal">Palladium</span><br>
@@ -635,11 +636,19 @@ function side(sign){
   const tbar=mk(new THREE.BoxGeometry(5,1.5,1.1),'metal','end',ep);tbar.position.set(1.8,9.5,5.1);
   const cr=mk(new THREE.OctahedronGeometry(1.25,0),'crystal','end',ep);cr.position.set(-.6,9.5,5.9);cr.rotation.set(.4,.7,0);
   const sideBar=mk(new THREE.BoxGeometry(1.4,2.2,7.4),'metal','end',ep);sideBar.position.set(3.7,9.5,1.6);
+  // hinge: frame-side plate on the rim back, three knuckles at the inner corner, temple-side plate, screw + rivet heads
+  mk(new THREE.BoxGeometry(5.6,11,1),'metal','end',ep).position.set(-4.6,9.5,-4.25);
+  for(const dy of [-3.3,0,3.3]){const k=mk(new THREE.CylinderGeometry(1.45,1.45,3,20),'metal','end',ep);k.position.set(-3.9,9.5+dy,-5.6)}
+  const scr=mk(new THREE.CylinderGeometry(.95,.95,.6,6),'metal','end',ep);scr.position.set(-3.9,14.65,-5.6);
+  const tp=mk(new THREE.BoxGeometry(1,11,7.5),'metal','end',ep);tp.position.set(-2.9,9.5,-9.6);
+  for(const y of [2.2,16.8]){const r=mk(new THREE.CylinderGeometry(.75,.75,.5,16),'metal','end',ep);r.rotation.x=Math.PI/2;r.position.set(-.3,y,-3.95)}
   // temple: thick acetate arm, long engraved arrow plate, metal clasp bands
   const tg=new THREE.Group();tg.position.set(-1.4,9.5,-4.4);tg.rotation.y=Math.PI/2+Math.atan(slope(63.3))-THREE.MathUtils.degToRad(3);ep.add(tg);
   const prof=new THREE.Shape();
-  prof.moveTo(0,6.4);prof.lineTo(20,6.4);prof.quadraticCurveTo(64,6,100,3.6);prof.quadraticCurveTo(128,2.8,139,-16);
-  prof.quadraticCurveTo(141.5,-23,136,-22.5);prof.quadraticCurveTo(126,-5.5,100,-3);prof.quadraticCurveTo(56,-6.4,0,-6.4);prof.closePath();
+  // side profile fitted to the 3/4 and rear photos: ~14mm tall at the hinge, tapering, then a long drop to a paddle tip
+  prof.moveTo(0,7.2);prof.lineTo(24,7.2);prof.quadraticCurveTo(70,6.4,112,3.6);prof.quadraticCurveTo(124,2.8,128,-4);
+  prof.quadraticCurveTo(133,-14,131.2,-33);prof.quadraticCurveTo(130.6,-38,126.2,-37.2);prof.quadraticCurveTo(124.6,-20,118.5,-7);
+  prof.quadraticCurveTo(114.5,-2.4,106,-2.6);prof.quadraticCurveTo(60,-4.6,0,-6.8);prof.closePath();
   mk(ext(prof,4.4,.9,4),'frame','temple',tg);
   mk(ext(poly([[7,4.3],[61,4.3],[73,.2],[61,-3.9],[7,-3.9]]),.5,.25,2),'metal','temple',tg).position.z=5.3;
   mk(flatUV(new THREE.ShapeGeometry(poly([[9.5,3.4],[60.6,3.4],[70.4,.2],[60.6,-3],[9.5,-3]]))),'engrave','temple',tg).position.z=6.07;
@@ -668,11 +677,16 @@ applyMaterials();
 /* ---------- views ---------- */
 const VIEWS={brow:[.05,.75,1],end:[1,.25,.75],temple:[1,.18,-.35],lens:[.12,.04,1]};
 let camGoal=null,resumeT=0,mode='home',baseDist=420;
-const fit=(w,h)=>{const a=w/h;baseDist=Math.max(mode==='home'?362:305,493/a)}; // 1.5x larger than before, capped to fit the stage at every angle
+const fit=(w,h)=>{const a=w/h;baseDist=Math.max(mode==='home'?362:305,493/a); // 1.5x larger than before, capped to fit the stage at every angle
+  if(mode==='home'){controls.minDistance=baseDist/2;controls.maxDistance=baseDist}else{controls.minDistance=90;controls.maxDistance=720}};
 function setMode(m){
-  mode=m;controls.enableZoom=m==='object';
+  mode=m;controls.enableZoom=true;
   controls.autoRotate=!reduce;controls.autoRotateSpeed=m==='home'?1.6:.7;
 }
+renderer.domElement.addEventListener('wheel',e=>{ // on the home hero, let the page scroll once the zoom limit is reached
+  if(mode!=='home')return;const d=camera.position.distanceTo(controls.target);
+  if((e.deltaY<0&&d<=controls.minDistance+.5)||(e.deltaY>0&&d>=controls.maxDistance-.5))e.stopImmediatePropagation();
+},{capture:true});
 controls.addEventListener('start',()=>{controls.autoRotate=false;camGoal=null;clearTimeout(resumeT)});
 controls.addEventListener('end',()=>{clearTimeout(resumeT);resumeT=setTimeout(()=>{if(!window.PV?.locked)controls.autoRotate=!reduce},2600)});
 
@@ -688,7 +702,7 @@ function attach(){
   setMode(m.dataset.mode);size();
   const d=baseDist;camera.position.set(.62*d,.22*d,.76*d);controls.target.set(0,0,0);camGoal=null;controls.update();
 }
-addEventListener('pv:route',attach);
+addEventListener('pv:route',()=>{camGoal=null;applyMaterials();attach()});
 addEventListener('pv:config',applyMaterials);
 addEventListener('pv:part',()=>{
   applyMaterials();const p=window.PV.part;
