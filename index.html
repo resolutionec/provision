@@ -560,21 +560,22 @@ function mk(geo,role,part,parent){const m=new THREE.Mesh(geo,new THREE.MeshBasic
 const frame=new THREE.Group();
 const B=1.2; // acetate edge radius
 function holeShape(g=0){ // lens opening, right side: top slopes down outward, generous lower corners
-  const xi=5.55-g,xo=60.95+g,ti=24.7+g,to=23.2+g,yb=-24.7-g,s=new THREE.Shape();
-  s.moveTo(xi+9,ti);s.lineTo(xo-15,to+.3);s.quadraticCurveTo(xo,to,xo,to-15);s.lineTo(xo,yb+21);s.quadraticCurveTo(xo,yb,xo-21,yb);
-  s.lineTo(xi+19,yb);s.quadraticCurveTo(xi,yb,xi,yb+19);s.lineTo(xi,ti-9);s.quadraticCurveTo(xi,ti,xi+9,ti);return s;
+  const xi=6.2-g,xo=60.95+g,ti=24.7+g,to=23.2+g,yb=-24.7-g,s=new THREE.Shape();
+  s.moveTo(xi+9,ti);s.lineTo(xo-15,to+.3);s.quadraticCurveTo(xo,to,xo,to-15);s.lineTo(xo,yb+25);s.quadraticCurveTo(xo,yb,xo-25,yb);
+  s.lineTo(xi+15,yb);s.quadraticCurveTo(xi,yb,xi,yb+15);s.lineTo(xi,ti-9);s.quadraticCurveTo(xi,ti,xi+9,ti);return s;
 }
 const hole=(sx)=>new THREE.Path(holeShape().getPoints(20).map(p=>new THREE.Vector2(p.x*sx,p.y)));
 function frontShape(){ // one piece of acetate: both rims + keyhole bridge
   const half=[ // right half, top-centre clockwise to bridge underside
-    ['m',0,27],['q',3,27.3,9,27.3],['l',47,26.5],['q',64.8,25.8,64.8,9],['l',64.8,-2],
-    ['q',64.8,-26.3,40.5,-26.3],['l',24.5,-26.3],['q',3.95,-26.3,3.95,-5.7],['q',3.7,4.6,0,4.7]];
+    ['m',0,27],['q',3,27.3,9,27.3],['l',47,26.5],['q',64.8,25.8,64.8,9],['l',64.8,0],
+    ['q',64.8,-26.3,37,-26.3],['l',16,-26.3],['q',7,-26.3,5.9,-20.5],['c',5,-10,3.4,0,0,0]];
   const s=new THREE.Shape();
-  for(const [c,...a] of half){c==='m'?s.moveTo(a[0],a[1]):c==='l'?s.lineTo(a[0],a[1]):s.quadraticCurveTo(a[0],a[1],a[2],a[3])}
+  const go=([c,...a])=>c==='m'?s.moveTo(...a):c==='l'?s.lineTo(...a):c==='c'?s.bezierCurveTo(...a):s.quadraticCurveTo(...a);
+  half.forEach(go);
   // mirror back along the left half
-  const rev=[['q',-3.7,4.6,-3.95,-5.7],['q',-3.95,-26.3,-24.5,-26.3],['l',-40.5,-26.3],['q',-64.8,-26.3,-64.8,-2],
+  const rev=[['c',-3.4,0,-5,-10,-5.9,-20.5],['q',-7,-26.3,-16,-26.3],['l',-37,-26.3],['q',-64.8,-26.3,-64.8,0],
     ['l',-64.8,9],['q',-64.8,25.8,-47,26.5],['l',-9,27.3],['q',-3,27.3,0,27]];
-  for(const [c,...a] of rev){c==='l'?s.lineTo(a[0],a[1]):s.quadraticCurveTo(a[0],a[1],a[2],a[3])}
+  rev.forEach(go);
   s.holes.push(hole(1),hole(-1));return s;
 }
 const front=ext(frontShape(),5,B,6,36);front.translate(0,0,-2.5);bendGeo(front);
