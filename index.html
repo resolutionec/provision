@@ -668,7 +668,8 @@ const M={
   frame:{
     black:new THREE.MeshPhysicalMaterial({color:0x0a0a0b,roughness:.2,clearcoat:1,clearcoatRoughness:.04}),
     havana:new THREE.MeshPhysicalMaterial({map:tortoise(),roughness:.22,clearcoat:1,clearcoatRoughness:.05}),
-    smoke:new THREE.MeshPhysicalMaterial({color:0x968f86,roughness:.1,metalness:0,clearcoat:1,clearcoatRoughness:.03,sheen:.5,sheenRoughness:.4,sheenColor:0xe0dacd,envMapIntensity:1.35}), // opaque: no transmission pass (it flickered on phones)
+    // semi-transparent smoke crystal: plain alpha blending (no transmission pass), drawn in two fixed passes
+    smoke:new THREE.MeshPhysicalMaterial({color:0x8d867c,roughness:.06,metalness:0,clearcoat:1,clearcoatRoughness:.02,transparent:true,opacity:.62,depthWrite:true,side:THREE.FrontSide,envMapIntensity:1.5}),
     bone:new THREE.MeshPhysicalMaterial({color:0xe6ddca,roughness:.3,clearcoat:.9,clearcoatRoughness:.08})},
   metal:{},engrave:{},
   lens:{grey:0x262930,brown:0x4a3020,g15:0x2c3828,rose:0xb98a84},
@@ -830,12 +831,18 @@ frame.position.sub(ctr);frame.position.y+=4;
 /* ---------- materials by state + highlight ---------- */
 const hiCache=new Map();
 const hi=(m)=>{if(!hiCache.has(m)){const c=m.clone();c.emissive=new THREE.Color(0xb08a52);c.emissiveIntensity=m===M.crystal?.2:.55;hiCache.set(m,c)}return hiCache.get(m)};
+// back-face pass for see-through acetate: far surfaces first (no depth write), then near surfaces
+const SMOKE_BACK=new THREE.MeshPhysicalMaterial({color:0x7a746b,roughness:.1,metalness:0,transparent:true,opacity:.5,depthWrite:false,side:THREE.BackSide,envMapIntensity:1.2});
+for(const m of parts)if(m.userData.role==='frame'){const b=new THREE.Mesh(m.geometry,SMOKE_BACK);b.visible=false;b.renderOrder=1;b.userData.back=1;m.add(b);m.userData.backMesh=b}
 function applyMaterials(){
   const c=window.PV?.cfg||{frame:'black',metal:'palladium',lens:'grey'};const p=window.PV?.part;
+  const clear=c.frame==='smoke';
   for(const m of parts){
     const r=m.userData.role;
     const base=r==='frame'?M.frame[c.frame]:r==='metal'?M.metal[c.metal]:r==='engrave'?M.engrave[c.metal]:r.startsWith('eng:')?M.eng[r.slice(4)][c.metal]:r==='lens'?M.lens[c.lens]:r==='dark'?M.dark:M.crystal;
     m.material=p&&m.userData.part===p?hi(base):base;
+    if(m.userData.backMesh){m.userData.backMesh.visible=clear;m.renderOrder=clear?2:0}
+    if(r==='lens')m.renderOrder=clear?3:0;
   }
 }
 applyMaterials();
