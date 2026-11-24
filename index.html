@@ -668,7 +668,7 @@ const M={
   frame:{
     black:new THREE.MeshPhysicalMaterial({color:0x0a0a0b,roughness:.2,clearcoat:1,clearcoatRoughness:.04}),
     havana:new THREE.MeshPhysicalMaterial({map:tortoise(),roughness:.22,clearcoat:1,clearcoatRoughness:.05}),
-    smoke:new THREE.MeshPhysicalMaterial({color:0x8a847b,roughness:.12,transmission:.82,thickness:6,ior:1.5,clearcoat:1,clearcoatRoughness:.05}),
+    smoke:new THREE.MeshPhysicalMaterial({color:0x968f86,roughness:.1,metalness:0,clearcoat:1,clearcoatRoughness:.03,sheen:.5,sheenRoughness:.4,sheenColor:0xe0dacd,envMapIntensity:1.35}), // opaque: no transmission pass (it flickered on phones)
     bone:new THREE.MeshPhysicalMaterial({color:0xe6ddca,roughness:.3,clearcoat:.9,clearcoatRoughness:.08})},
   metal:{},engrave:{},
   lens:{grey:0x262930,brown:0x4a3020,g15:0x2c3828,rose:0xb98a84},
@@ -793,7 +793,7 @@ function side(sign){
    {const q=g.attributes.position;for(let i=0;i<q.count;i++){const z=q.getZ(i);q.setZ(i,-z)}} // rotateX flips z sign; restore
    g.computeVertexNormals();mk(g,'frame','front',ep)}
   // T-bar side arm runs along the extension to the hinge bands
-  const arm=mk(new THREE.BoxGeometry(LUG+7.4,3.84,1.1),'metal','end',tg);arm.position.set(-(LUG+7.4)/2+.3,.81,5.85);
+  const arm=mk(new THREE.BoxGeometry(LUG+9.6,3.84,1.1),'metal','end',tg);arm.position.set(-(LUG+9.6)/2+2.4,.81,5.85); // runs under the first clasp band: one continuous piece
   // hinge at the joint, on the inside: seven knuckles on a pin, frame leaf on the extension, temple leaf on the arm
   const HL=11.6,HG=.16,KH=(HL-6*HG)/7,HZ=-2.25;
   mk(new THREE.CylinderGeometry(.95,.95,HL,16),'dark','end',tg).position.set(0,0,HZ);
