@@ -582,7 +582,7 @@ function tick(t){
     el.style.transform=`translate3d(0,${(-p*parseFloat(el.dataset.plx)).toFixed(2)}%,0)`}
     // scroll-linked slide in from the left; progress only ever increases, so it stays anchored on scroll-up
     for(const el of document.querySelectorAll('.view.on [data-slide]')){const r=el.getBoundingClientRect();
-      const raw=Math.min(1,Math.max(0,(vh*1.4-r.top)/(vh*1.15))); /* starts ~40% of a screen before it appears */const prog=Math.max(+el.dataset.prog||0,raw);el.dataset.prog=prog;
+      const raw=Math.min(1,Math.max(0,(vh*1.4-r.top)/(vh*.85))); /* starts ~40% of a screen before it appears */const prog=Math.max(+el.dataset.prog||0,raw);el.dataset.prog=prog;
       // ease toward the scroll target over time, then shape it with an ease-in-out curve
       el._cur=(el._cur||0)+(prog-(el._cur||0))*.045;if(prog-el._cur<.004)el._cur=prog;
       const c=el._cur,e=c<.5?4*c*c*c:1-Math.pow(-2*c+2,3)/2;el.style.transform=`translate3d(${(-(1-e)*38).toFixed(2)}vw,0,0)`;el.style.opacity=(.3+.7*e).toFixed(3)}}
