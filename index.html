@@ -465,7 +465,7 @@ const cfgHTML=()=>`<div class="cfg" role="group" aria-label="Configure model A03
   <div class="cfg-row"><span class="cfg-k">${k==='frame'?'Frame':'Metal'}</span>
   <div class="sw">${OPTS[k].map(([v,n,c])=>`<button class="swatch" data-k="${k}" data-v="${v}" title="${n}" aria-label="${k} colour: ${n}" aria-pressed="${cfg[k]===v}"><i class="${v==='havana'?'havana':''}" style="${c?`background:${c}`:''}"></i></button>`).join('')}</div>
   <span class="cfg-v" data-name="${k}">${nameOf(k)}</span></div>`).join('')}</div>
-  <p class="small cfg-note">Photographed sample: Black / Palladium. Other colourways are concept renders. <button class="reset" data-reset>Reset</button></p>`;
+  <p class="small cfg-note">Colorways are concept renders. <button class="reset" data-reset>Reset</button></p>`;
 const paintCfg=()=>{
   document.querySelectorAll('[data-cfg]').forEach(el=>el.innerHTML=cfgHTML());
   document.querySelectorAll('[data-name]').forEach(el=>el.textContent=nameOf(el.dataset.name));
