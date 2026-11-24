@@ -13,12 +13,14 @@ A website for Pro-Vision Optical (OEM & ODM eyewear, Shenzhen), presented as an 
 ## 3D model
 A03039 is modelled by hand in Three.js (r160, loaded from jsDelivr) from the three reference photos in `img/`. It isn't a scan. Its parts are named (brow bar, end-piece, temple, lens), so the callouts can highlight them.
 
-Colourways: frame (Black, Havana, Smoke crystal, Bone), metal (Palladium, Gold, Gunmetal), lens (Grey, Brown, G-15, Rose). The photographed sample is Black / Palladium / Grey. The other colourways are concept renders.
+Colourways: frame (Black, Havana, Smoke crystal, Bone) × metal (Palladium, Gold, Gunmetal); lens fixed to grey. Default is Bone / Gold.
+
+Full configurator settings, export formats and rendering lessons: **[docs/3d-configurator-guide.md](docs/3d-configurator-guide.md)**.
 
 If WebGL is unavailable, the stage falls back to the product photograph.
 
 ## Type & colour
-League Spartan for headings, Courier Prime for text, and a warm cream gallery wall (`#f4f0e8`). Dark mode follows the system setting.
+League Spartan for headings, Courier Prime for text, and a warm cream gallery wall (`#f4f0e8`). Light mode only.
 
 ## Still to supply
 - Product pages and photos for the other works (the placeholder cards read "Awaiting installation")
