@@ -606,7 +606,7 @@ import {mergeVertices} from 'three/addons/utils/BufferGeometryUtils.js';
 
 const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let renderer;
-try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:false})}catch(e){document.body.classList.add('no3d');throw e}
+try{renderer=new THREE.WebGLRenderer({antialias:true,alpha:true,preserveDrawingBuffer:false,logarithmicDepthBuffer:true})}catch(e){document.body.classList.add('no3d');throw e}
 renderer.setPixelRatio(Math.min(devicePixelRatio,1.75));
 renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
 renderer.outputColorSpace=THREE.SRGBColorSpace;
@@ -672,14 +672,14 @@ const M={
     bone:new THREE.MeshPhysicalMaterial({color:0xe6ddca,roughness:.3,clearcoat:.9,clearcoatRoughness:.08})},
   metal:{},engrave:{},
   lens:{grey:0x262930,brown:0x4a3020,g15:0x2c3828,rose:0xb98a84},
-  dark:new THREE.MeshStandardMaterial({color:0x111111,metalness:.6,roughness:.5}),
+  dark:new THREE.MeshStandardMaterial({color:0x111111,metalness:.6,roughness:.5,polygonOffset:true,polygonOffsetFactor:-3,polygonOffsetUnits:-3}),
   crystal:new THREE.MeshPhysicalMaterial({color:0xffffff,roughness:0,metalness:.15,iridescence:1,iridescenceIOR:2.0,iridescenceThicknessRange:[200,900],clearcoat:1,envMapIntensity:4.5,flatShading:true,emissive:0x222833})};
 const METAL={palladium:0xe4e1da,gold:0xe2bf74,gunmetal:0x77787e};
 M.eng={};for(const k of Object.keys(ENG))M.eng[k]={};
 for(const [k,c] of Object.entries(METAL)){
   for(const e of Object.keys(ENG))M.eng[e][k]=new THREE.MeshStandardMaterial({color:c,map:ENG[e].map,bumpMap:ENG[e].bump,bumpScale:.7,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2,metalness:.72,roughness:.38,envMapIntensity:1.7});
-  M.metal[k]=new THREE.MeshStandardMaterial({color:c,metalness:1,roughness:.2,envMapIntensity:1.9});
-  M.engrave[k]=new THREE.MeshStandardMaterial({color:c,map:engrMap,bumpMap:engrBump,bumpScale:.8,metalness:1,roughness:.32,envMapIntensity:1.9});
+  M.metal[k]=new THREE.MeshStandardMaterial({color:c,metalness:1,roughness:.2,envMapIntensity:1.9,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+  M.engrave[k]=new THREE.MeshStandardMaterial({color:c,polygonOffset:true,polygonOffsetFactor:-2,polygonOffsetUnits:-2,map:engrMap,bumpMap:engrBump,bumpScale:.8,metalness:1,roughness:.32,envMapIntensity:1.9});
 }
 for(const [k,c] of Object.entries(M.lens)){
   M.lens[k]=new THREE.MeshPhysicalMaterial({color:c,roughness:.03,metalness:0,transparent:true,opacity:k==='rose'?.72:.86,clearcoat:1,envMapIntensity:1.5,side:THREE.DoubleSide});
