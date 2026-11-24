@@ -15,7 +15,7 @@ A03039 is modelled by hand in Three.js (r160, loaded from jsDelivr) from the thr
 
 Colourways: frame (Black, Havana, Smoke crystal, Bone) × metal (Palladium, Gold, Gunmetal); lens fixed to grey. Default is Bone / Gold.
 
-Full configurator settings, export formats and rendering lessons: **[docs/3d-configurator-guide.md](docs/3d-configurator-guide.md)**.
+Full configurator settings, export formats and rendering lessons: **[docs/3d-configurator-guide.md](docs/3d-configurator-guide.md)**. To add a new frame, send what is listed in **[docs/new-model-intake.md](docs/new-model-intake.md)**.
 
 If WebGL is unavailable, the stage falls back to the product photograph.
 
